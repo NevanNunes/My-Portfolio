@@ -15,7 +15,7 @@ else:
     DEBUG = False        
 
 # Updated ALLOWED_HOSTS with your Render domain
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'yourdomain.com', 'nevan.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'yourdomain.com', 'nevann.onrender.com']
 
 # Installed apps
 INSTALLED_APPS = [
@@ -109,7 +109,7 @@ CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins (for development only)
 CORS_ALLOWED_ORIGINS = [  # Add your frontend URL here
     'http://localhost:3000',  # Local React frontend
     'https://your-vercel-app.vercel.app',  # Deployed frontend
-    'https://nevan.onrender.com',  # Your Render domain
+    'https://nevann.onrender.com',  # Your Render domain
 ]
 
 # Logs directory setup
