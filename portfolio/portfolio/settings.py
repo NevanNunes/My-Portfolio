@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',  # Enable CORS for frontend communication
     'home',  # Your Django app
-    'admin_honeypot',  # Admin honeypot for security
+      # Admin honeypot for security
 ]
 
 # Middleware
