@@ -1,13 +1,21 @@
 import os
 from pathlib import Path
-
+from environ import Env
+env = Env()
+env.read_env()
+ENVIRONMENT = env('ENVIRONMENT', default='development')
 # Base directory of the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security settings
-SECRET_KEY = 'django-insecure-a79l$we=-*cp=a5v##ru_s+%x@b*7*+rz&23b2krl#01u*-dwh'
-DEBUG = True  # Change to False in production
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'yourdomain.com']  # Add your domain here
+SECRET_KEY = env('SECRET_KEY')
+if ENVIRONMENT == 'development':
+    DEBUG = True  # Change to False in production
+else:
+    DEBUG = False        
+
+# Updated ALLOWED_HOSTS with your Render domain
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'yourdomain.com', 'nevan.onrender.com']
 
 # Installed apps
 INSTALLED_APPS = [
@@ -19,11 +27,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',  # Enable CORS for frontend communication
     'home',  # Your Django app
+    'admin_honeypot',  # Admin honeypot for security
 ]
 
 # Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add WhiteNoise for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',  # CORS middleware
     'django.middleware.common.CommonMiddleware',
@@ -83,6 +93,10 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Configure WhiteNoise for static files in production
+if not DEBUG:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -95,6 +109,7 @@ CORS_ALLOW_ALL_ORIGINS = True  # Allow all origins (for development only)
 CORS_ALLOWED_ORIGINS = [  # Add your frontend URL here
     'http://localhost:3000',  # Local React frontend
     'https://your-vercel-app.vercel.app',  # Deployed frontend
+    'https://nevan.onrender.com',  # Your Render domain
 ]
 
 # Logs directory setup
@@ -121,4 +136,9 @@ LOGGING = {
 }
 
 # Cross-Origin Resource Sharing (CORS)
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'https://your-vercel-app.vercel.app']
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000', 
+    'https://your-vercel-app.vercel.app',
+    'https://nevan.onrender.com'  # Added your Render domain
+]
+ACCOUNT_USERNAME_BLACKLIST = ['admin', 'superuser', 'user', 'username', 'root', 'omke']
