@@ -6,7 +6,14 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.settings')
+    # Add the parent directory to sys.path to help Python find your modules
+    current_path = os.path.dirname(os.path.abspath(__file__))
+    parent_path = os.path.dirname(current_path)
+    sys.path.append(parent_path)
+    
+    # Set the correct Django settings module path
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.portfolio.settings')
+    
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
