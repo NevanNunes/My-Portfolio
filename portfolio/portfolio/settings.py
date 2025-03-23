@@ -64,7 +64,7 @@ TEMPLATES = [
 ]
 
 # WSGI application
-WSGI_APPLICATION = 'portfolio.wsgi.application'
+WSGI_APPLICATION = 'portfolio.portfolio.wsgi.application'
 
 # Database configuration (SQLite for development, can be changed to PostgreSQL)
 DATABASES = {
